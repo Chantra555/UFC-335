@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#090909">
+    <meta name="description" content="Join Austin and Chantra for UFC 335 on December 12 at The Grove.">
+    <title>UFC 335 | Fight Night at Austin & Chantra's</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="wordmark" href="#home" aria-label="Fight Night home">
+          <span class="wordmark-mark" aria-hidden="true">F</span>
+          <span>FIGHT NIGHT<span class="wordmark-period">.</span></span>
+        </a>
+        <a class="nav-link" href="#event-details">EVENT DETAILS <span aria-hidden="true">↘</span></a>
+      </header>
+
+      <main>
+        <section class="hero" id="event-details" aria-labelledby="hero-title">
+          <div class="hero-art" role="img" aria-label="UFC 335 main event: Lopes versus Oliveira">
+            <div class="octagon octagon-outer"></div>
+            <div class="octagon octagon-inner"></div>
+            <div class="hero-art-label">UFC 335 · MAIN EVENT</div>
+            <div class="hero-matchup">
+              <span>LOPES</span>
+              <span class="hero-matchup-vs">VS</span>
+              <span>OLIVEIRA</span>
+            </div>
+            <span class="art-cross cross-one"></span>
+            <span class="art-cross cross-two"></span>
+          </div>
+          <div class="hero-details">
+            <p class="eyebrow">AUSTIN &amp; CHANTRA INVITE YOU</p>
+            <h1 id="hero-title">UFC <span>335</span></h1>
+            <p class="hero-details-subtitle">EVENT DETAILS</p>
+            <div class="event-details-list">
+              <article class="event-detail-card">
+                <span class="event-detail-icon" aria-hidden="true">◷</span>
+                <div>
+                  <p class="detail-label">WHEN</p>
+                  <h2 id="event-date">December 12</h2>
+                  <p id="event-time">6:30 PM</p>
+                </div>
+              </article>
+              <article class="event-detail-card">
+                <span class="event-detail-icon" aria-hidden="true">⌖</span>
+                <div>
+                  <p class="detail-label">WHERE</p>
+                  <h2 id="event-location">The Grove</h2>
+                  <p>Join us for fight night</p>
+                </div>
+              </article>
+            </div>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#rsvp" id="hero-rsvp">RSVP NOW <span aria-hidden="true">↗</span></a>
+              <div class="venmo-action">
+                <button class="text-button venmo-button" type="button" disabled aria-describedby="venmo-note">BACK THE FIGHT-NIGHT CORNER <span aria-hidden="true">↗</span></button>
+                <span class="venmo-note" id="venmo-note">VENMO LINK COMING SOON</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="rsvp section-wrap" id="rsvp" aria-labelledby="rsvp-title">
+          <div class="rsvp-intro">
+            <p class="eyebrow">DON'T JUST WATCH THE GROUP CHAT</p>
+            <h2 id="rsvp-title">ARE YOU<br><span>IN?</span></h2>
+            <p>Let us know who's coming. We'll save your spot and keep the fight-night crew in one place.</p>
+            <div class="guest-count" aria-live="polite">
+              <span class="guest-count-number" id="guest-count">0</span>
+              <span>ON THE<br>LIST</span>
+            </div>
+          </div>
+          <div class="rsvp-panel">
+            <form id="rsvp-form">
+              <label for="guest-name">YOUR NAME</label>
+              <input id="guest-name" name="name" type="text" maxlength="60" placeholder="How should we put you down?" autocomplete="name" required>
+
+              <label for="guest-status">CAN YOU MAKE IT?</label>
+              <select id="guest-status" name="status">
+                <option value="yes">I'm in</option>
+                <option value="maybe">Maybe — keeping my options open</option>
+                <option value="no">Can't make it</option>
+              </select>
+
+              <label for="guest-party">HOW MANY IN YOUR CREW?</label>
+              <input id="guest-party" name="partySize" type="number" min="1" step="1" value="1" inputmode="numeric" required>
+
+              <button class="button button-primary button-submit" type="submit">SAVE MY RSVP <span aria-hidden="true">↗</span></button>
+              <p class="form-message" id="form-message" role="status" aria-live="polite"></p>
+            </form>
+            <div class="guest-list-heading">
+              <h3>THE FIGHT-NIGHT CREW</h3>
+              <span id="rsvp-total">0 RSVPS</span>
+            </div>
+            <ul class="guest-list" id="guest-list" aria-live="polite"></ul>
+            <p class="privacy-note">RSVPs on this preview are saved only in this browser.</p>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <a class="wordmark" href="#home">
+          <span class="wordmark-mark" aria-hidden="true">F</span>
+          <span>FIGHT NIGHT<span class="wordmark-period">.</span></span>
+        </a>
+        <p>MADE FOR THE FIGHT. STAY FOR THE FRIENDS.</p>
+        <a class="back-to-top" href="#home">BACK TO TOP ↑</a>
+      </footer>
+    </div>
+    <div class="fight-intro" id="fight-intro" role="dialog" aria-modal="true" aria-labelledby="intro-matchup-title">
+      <div class="intro-content">
+        <p class="intro-eyebrow">UFC 335 <span>·</span> DECEMBER 12</p>
+        <div class="intro-image-frame">
+          <img class="intro-placeholder-image" src="OIP.webp" alt="Temporary red and orange star splash image" fetchpriority="high">
+        </div>
+        <p class="intro-main-event">MAIN EVENT</p>
+        <h2 class="intro-matchup" id="intro-matchup-title">
+          <span>LOPES</span>
+          <span class="intro-versus">VS</span>
+          <span>OLIVEIRA</span>
+        </h2>
+        <p class="intro-venue">THE GROVE <span>·</span> 6:30 PM</p>
+        <div class="intro-actions">
+          <button class="intro-sound-button" id="ring-bell" type="button">RING THE BELL AGAIN</button>
+          <button class="intro-skip-button" id="skip-intro" type="button">SKIP INTRO <span aria-hidden="true">↗</span></button>
+        </div>
+        <p class="intro-sound-status" id="sound-status" role="status" aria-live="polite">Main event incoming.</p>
+      </div>
+    </div>
+  </body>
+</html>
