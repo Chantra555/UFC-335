@@ -148,8 +148,8 @@ p {
   margin: 12px 0 0;
   font-family: var(--display);
   font-size: clamp(52px, 6vw, 74px);
-  font-weight: 900;
-  letter-spacing: -2px;
+  font-weight: 800;
+  letter-spacing: 1px;
   line-height: 0.95;
 }
 
@@ -320,7 +320,7 @@ p {
     radial-gradient(ellipse at center, rgb(91 11 22 / 32%), transparent 48%),
     rgb(7 7 7 / 97%);
   opacity: 1;
-  transition: opacity 700ms ease, transform 700ms ease;
+  transition: opacity 350ms ease, transform 350ms ease;
 }
 
 .fight-intro[hidden] {
@@ -472,18 +472,14 @@ p {
 }
 
 .event-detail-card {
-  display: grid;
-  grid-template-columns: 30px minmax(0, 1fr);
-  align-items: start;
-  gap: 12px;
+  display: block;
   padding: 16px 18px;
-  border: 1px solid var(--line);
+  border: 1px solid rgb(251 38 57 / 42%);
+  border-radius: 8px;
   background: linear-gradient(110deg, #121111, #0d0c0c);
-}
-
-.event-detail-icon {
-  color: var(--red);
-  font-size: 20px;
+  box-shadow:
+    inset 0 0 12px rgb(251 38 57 / 4%),
+    0 0 14px rgb(251 38 57 / 12%);
 }
 
 .event-detail-card h2 {
@@ -818,9 +814,9 @@ p {
   }
 
   .guest-count {
-    position: absolute;
-    margin-top: -1px;
-    margin-left: 175px;
+    position: static;
+    width: max-content;
+    margin: 0;
   }
 
   .rsvp-panel {

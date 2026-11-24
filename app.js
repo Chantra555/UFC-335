@@ -204,7 +204,7 @@ function closeFightIntro() {
   window.setTimeout(() => {
     fightIntro.hidden = true;
     document.querySelector("#hero-rsvp").focus({ preventScroll: true });
-  }, 720);
+  }, 370);
 }
 
 ringBellButton.addEventListener("click", () => void ringBell());
@@ -225,6 +225,6 @@ document.addEventListener("keydown", (event) => {
 
 skipIntroButton.focus({ preventScroll: true });
 void ringBell();
-introFadeTimer = window.setTimeout(closeFightIntro, 4700);
+introFadeTimer = window.setTimeout(closeFightIntro, 3200);
 
 renderRsvps();
