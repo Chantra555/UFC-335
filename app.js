@@ -109,8 +109,6 @@ form.addEventListener("submit", (event) => {
 
 const fightIntro = document.querySelector("#fight-intro");
 const skipIntroButton = document.querySelector("#skip-intro");
-const ringBellButton = document.querySelector("#ring-bell");
-const soundStatus = document.querySelector("#sound-status");
 let bellAudioContext;
 let introFadeTimer;
 let introClosed = false;
@@ -118,8 +116,7 @@ let introClosed = false;
 async function ringBell() {
   const AudioContextConstructor = window.AudioContext || window.webkitAudioContext;
   if (!AudioContextConstructor) {
-    soundStatus.textContent = "Bell audio is not supported in this browser.";
-    ringBellButton.disabled = true;
+    console.warn("Bell audio is not supported in this browser.");
     return;
   }
 
@@ -129,23 +126,29 @@ async function ringBell() {
 
     const now = bellAudioContext.currentTime;
     const partials = [
-      { frequency: 530, detune: -5, volume: 0.2, duration: 1.8 },
-      { frequency: 775, detune: 6, volume: 0.15, duration: 1.45 },
-      { frequency: 1168, detune: -3, volume: 0.1, duration: 1.2 },
-      { frequency: 1745, detune: 4, volume: 0.065, duration: 0.95 },
-      { frequency: 2490, detune: -4, volume: 0.04, duration: 0.7 },
-      { frequency: 3180, detune: 2, volume: 0.022, duration: 0.5 },
+      { frequency: 530, detune: -5, volume: 0.2, duration: 2.2 },
+      { frequency: 775, detune: 6, volume: 0.15, duration: 1.9 },
+      { frequency: 1168, detune: -3, volume: 0.1, duration: 1.6 },
+      { frequency: 1745, detune: 4, volume: 0.065, duration: 1.4 },
+      { frequency: 2490, detune: -4, volume: 0.05, duration: 1.2 },
+      { frequency: 3180, detune: 2, volume: 0.035, duration: 1 },
+      { frequency: 3960, detune: -2, volume: 0.022, duration: 0.8 },
     ];
-    const echo = bellAudioContext.createDelay(0.2);
+    const echo = bellAudioContext.createDelay(0.5);
     const echoGain = bellAudioContext.createGain();
-    echo.delayTime.setValueAtTime(0.075, now);
-    echoGain.gain.setValueAtTime(0.12, now);
+    const echoFeedback = bellAudioContext.createGain();
+    echo.delayTime.setValueAtTime(0.14, now);
+    echoGain.gain.setValueAtTime(0.2, now);
+    echoFeedback.gain.setValueAtTime(0.24, now);
     echo.connect(echoGain);
     echoGain.connect(bellAudioContext.destination);
+    echo.connect(echoFeedback);
+    echoFeedback.connect(echo);
     window.setTimeout(() => {
       echo.disconnect();
       echoGain.disconnect();
-    }, 2400);
+      echoFeedback.disconnect();
+    }, 4500);
 
     for (const partial of partials) {
       const oscillator = bellAudioContext.createOscillator();
@@ -163,7 +166,7 @@ async function ringBell() {
       oscillator.stop(now + partial.duration + 0.01);
     }
 
-    const noiseDuration = 0.045;
+    const noiseDuration = 0.055;
     const noiseBuffer = bellAudioContext.createBuffer(
       1,
       Math.floor(bellAudioContext.sampleRate * noiseDuration),
@@ -179,20 +182,16 @@ async function ringBell() {
     const noiseGain = bellAudioContext.createGain();
     noise.buffer = noiseBuffer;
     filter.type = "highpass";
-    filter.frequency.setValueAtTime(1500, now);
-    noiseGain.gain.setValueAtTime(0.055, now);
+    filter.frequency.setValueAtTime(2200, now);
+    noiseGain.gain.setValueAtTime(0.065, now);
     noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + noiseDuration);
     noise.connect(filter);
     filter.connect(noiseGain);
     noiseGain.connect(bellAudioContext.destination);
     noise.start(now);
 
-    ringBellButton.textContent = "RING AGAIN";
-    soundStatus.textContent = "Bell is ringing.";
   } catch (error) {
     console.warn("Browser blocked the intro bell sound.", error);
-    ringBellButton.textContent = "TAP TO RING THE BELL";
-    soundStatus.textContent = "Autoplay was blocked. Tap the bell button to hear it.";
   }
 }
 
@@ -204,27 +203,20 @@ function closeFightIntro() {
   window.setTimeout(() => {
     fightIntro.hidden = true;
     document.querySelector("#hero-rsvp").focus({ preventScroll: true });
-  }, 370);
+  }, 2000);
 }
 
-ringBellButton.addEventListener("click", () => void ringBell());
 skipIntroButton.addEventListener("click", closeFightIntro);
 document.addEventListener("keydown", (event) => {
   if (fightIntro.hidden) return;
   if (event.key === "Escape" && !fightIntro.hidden) closeFightIntro();
   if (event.key !== "Tab") return;
-
-  if (event.shiftKey && document.activeElement === ringBellButton) {
-    event.preventDefault();
-    skipIntroButton.focus();
-  } else if (!event.shiftKey && document.activeElement === skipIntroButton) {
-    event.preventDefault();
-    ringBellButton.focus();
-  }
+  event.preventDefault();
+  skipIntroButton.focus();
 });
 
 skipIntroButton.focus({ preventScroll: true });
 void ringBell();
-introFadeTimer = window.setTimeout(closeFightIntro, 3200);
+introFadeTimer = window.setTimeout(closeFightIntro, 1000);
 
 renderRsvps();
